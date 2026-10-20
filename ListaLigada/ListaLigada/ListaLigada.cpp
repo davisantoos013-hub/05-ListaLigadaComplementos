@@ -8,6 +8,7 @@ struct NO {
 };
 
 NO* primeiro = NULL;
+NO* ultimo = NULL; //cria o ponteiro p/o último
 
 // headers
 void menu();
@@ -17,7 +18,7 @@ void exibirElementos();
 void inserirElemento();
 void excluirElemento();
 void buscarElemento();
-NO* posicaoElemento(int numero);
+//NO* posicaoElemento(int numero);
 //--------------------------
 
 int main()
@@ -79,6 +80,7 @@ void inicializar()
 	}
 
 	primeiro = NULL;
+	ultimo = NULL; //deixa o ultimo nulo p/inicializar a lista
 	cout << "Lista inicializada \n";
 
 }
@@ -127,26 +129,62 @@ void inserirElemento()
 	if (primeiro == NULL)
 	{
 		primeiro = novo;
+		ultimo = novo; //o último também aponta para o novo
 	}
 	else
 	{
 		// procura o final da lista
-		NO* aux = primeiro;
+		/*NO* aux = primeiro;
 		while (aux->prox != NULL) {
 			aux = aux->prox;
 		}
-		aux->prox = novo;
+		aux->prox = novo;*/
+
+		ultimo->prox = novo; //faz o último apontar para o novo 
+		ultimo = novo; //o último agora é o novo
 	}
 }
 
 void excluirElemento()
 {
+	NO* atual = primeiro;
+	NO* anterior = NULL;
+	NO* excluir;
+	int elemento;
 
+	cout << "Digite o elemento que deseja excluir: ";
+	cin >> elemento;
+
+	if (elemento = primeiro->valor) {
+
+		excluir = primeiro;
+		primeiro = primeiro->prox;
+		free(excluir);
+
+		return;
+
+	}
+	else {
+
+		while (atual->valor != elemento) {
+
+			anterior = atual;
+			atual = atual->prox;
+
+		}
+
+		if (atual == ultimo) {
+
+			ultimo = anterior;
+
+		}
+		free(atual);
+	}
 }
 
 void buscarElemento()
 {
-
+	
 }
 
 
