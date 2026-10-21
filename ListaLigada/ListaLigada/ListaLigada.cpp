@@ -8,7 +8,7 @@ struct NO {
 };
 
 NO* primeiro = NULL;
-NO* ultimo = NULL; //cria o ponteiro p/o �ltimo
+NO* ultimo = NULL; //cria o ponteiro p/o �ltimo
 
 // headers
 void menu();
@@ -70,7 +70,7 @@ void menu()
 
 void inicializar()
 {
-	// se a lista j� possuir elementos
+	// se a lista j� possuir elementos
 // libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
@@ -129,7 +129,7 @@ void inserirElemento()
 	if (primeiro == NULL)
 	{
 		primeiro = novo;
-		ultimo = novo; //o �ltimo tamb�m aponta para o novo
+		ultimo = novo; //o ultimo tambem aponta para o novo
 	}
 	else
 	{
@@ -140,46 +140,71 @@ void inserirElemento()
 		}
 		aux->prox = novo;*/
 
-		ultimo->prox = novo; //faz o �ltimo apontar para o novo 
-		ultimo = novo; //o �ltimo agora � o novo
+		ultimo->prox = novo; //faz o ultimo apontar para o novo 
+		ultimo = novo; //o ultimo agora e o novo
 	}
 }
 
 void excluirElemento()
 {
-	NO* atual = primeiro;
-	NO* anterior = NULL;
+	//Confere se a lista está vazia e avisa.
+	if (primeiro == NULL){
+			cout << "Lista vazia. ";
+			return;
+	}
+
+	
+
+	NO* atual = primeiro->prox;
+	NO* anterior = primeiro;
 	NO* excluir;
 	int elemento;
+
+	//se não estiver, pede o elemento
 
 	cout << "Digite o elemento que deseja excluir: ";
 	cin >> elemento;
 
-	if (elemento = primeiro->valor) {
+	//Se for o primeiro...
+	if (primeiro->valor == elemento) {
 
-		excluir = primeiro;
-		primeiro = primeiro->prox;
-		free(excluir);
-
+		excluir = primeiro; //guarda a posição original
+		primeiro = primeiro->prox; //o "primeiro" vira o segundo
+		if (primeiro == NULL){ ultimo = NULL;} //se a lista tiver só esse elemento, anula o "último"
+		free(excluir); //exclui a posição original do primeiro
 		return;
 
 	}
-	else {
+	
+	//se não for o primeiro, enquanto o atual não for nulo, nem a posição do elemento
+		while (atual != NULL && atual->valor != elemento) {
 
-		while (atual->valor != elemento) {
+			//percorre a lista com 2 ponteiros
 
 			anterior = atual;
 			atual = atual->prox;
 
 		}
+		
+		if (atual == NULL){ //se o atual for nulo, o elemento não está na lista
+			
+			cout << "Elemento nao encontrado";
+		}
+		else{
 
-		if (atual == ultimo) {
+			//se não...
 
-			ultimo = anterior;
+			anterior->prox = atual->prox; //atualiza os ponteiros
+
+		if (atual == ultimo) { //se o elemento for o último
+
+			ultimo = anterior; //o último vira o penúltimo
 
 		}
-		free(atual);
-	}
+		free(atual); //exclui o elemento
+
+		}
+	
 }
 
 void buscarElemento()
